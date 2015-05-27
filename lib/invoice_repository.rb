@@ -1,10 +1,6 @@
-class InvoiceRepository
+require_relative 'repository'
 
-  def initialize(file)
+class InvoiceRepository < Repository
+  attr_accessor :resources
 
-  end
-
-  def inspect
-    self.class
-  end
 end

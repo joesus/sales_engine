@@ -1,34 +1,29 @@
-require_relative 'transaction'
+require_relative 'repository'
 require 'csv'
 
-class TransactionRepository
-  attr_accessor :transactions
+class TransactionRepository < Repository
+  attr_accessor :resources
 
   def initialize(file)
-    @transactions = []
-    CSV.foreach(file) do |row|
-      @transactions << Transaction.new(row)
-    end
-    @transactions.shift
-  end
-
-  def inspect
-    self.class
-  end
-
-  def random
-    transactions[rand(transactions.count - 1)]
+    super
+    convert_ids
   end
 
   def find_by_id(id)
-    transactions.find { |transaction| transaction.id == id }
+    resources.find { |transaction| transaction.id == id }
   end
 
   def find_by_credit_card_number(number)
-    transactions.find { |transaction| transaction.credit_card_number == number }
+    resources.find { |transaction| transaction.credit_card_number == number }
   end
 
   def find_all_by_result(result)
-    transactions.select { |transaction| transaction.result == result }
+    resources.select { |transaction| transaction.result == result }
+  end
+
+  private
+
+  def convert_ids
+    resources.map { |resource| resource.id = resource.id.to_i }
   end
 end

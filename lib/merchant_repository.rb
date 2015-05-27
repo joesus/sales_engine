@@ -1,10 +1,6 @@
-class MerchantRepository
+require_relative 'repository'
 
-  def initialize(file)
+class MerchantRepository < Repository
+  attr_accessor :resources
 
-  end
-
-  def inspect
-    self.class
-  end
 end
